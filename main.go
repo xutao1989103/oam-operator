@@ -3,13 +3,13 @@ package main
 import (
 	"errors"
 	"flag"
-	"github.com/MEDIGO/go-healthz"
 	"github.com/xutao1989103/oam-operator/pkg/controller"
 	"github.com/xutao1989103/oam-operator/pkg/signals"
 	"github.com/xutao1989103/oam-operator/pkg/version"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/klog"
+	"github.com/MEDIGO/go-healthz"
 	"net/http"
 	"time"
 )
@@ -48,13 +48,16 @@ func main() {
 }
 
 func startHealthCheckServer()  {
+	started := time.Now()
 	healthz.Set("version", version.VERSION)
-
 	healthz.Register("important_check", time.Second*5, func() error {
 		return errors.New("fail fail fail")
 	})
-
-	http.Handle("/healthz", healthz.Handler())
+	http.HandleFunc("/healthz",  func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+		data := (time.Since(started)).String()
+		w.Write([]byte(data))
+	})
 	http.ListenAndServe(":8000", nil)
 }
 

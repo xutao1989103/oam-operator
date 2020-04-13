@@ -243,32 +243,24 @@ spec:
         app: oam-go
     spec:
       containers:
-      - image: xtaodocker/oam-operator:1.0.1
+      - image: xtaodocker/oam-operator:1.0.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
-          exec:
-            command:
-            - wget
-            - --quiet
-            - --tries=1
-            - --timeout=2
-            - --spider
-            - http://localhost:8000/healthz
-          timeoutSeconds: 5
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 5
         name: oam-operator
         ports:
         - containerPort: 8000
           name: http
         readinessProbe:
-          exec:
-            command:
-            - wget
-            - --quiet
-            - --tries=1
-            - --timeout=2
-            - --spider
-            - http://localhost:8000/healthz
-          timeoutSeconds: 5
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 5
         resources:
           limits:
             cpu: 1000m
