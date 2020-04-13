@@ -19,8 +19,8 @@ spec:
     spec:
       serviceAccountName: oam-go
       containers:
-        - name: flagger
-          image: xtaodocker/oam-operator:1.0.0
+        - name: oam-operator
+          image: xtaodocker/oam-operator:1.0.1
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
