@@ -3,13 +3,13 @@ package main
 import (
 	"errors"
 	"flag"
+	"github.com/MEDIGO/go-healthz"
 	"github.com/xutao1989103/oam-operator/pkg/controller"
 	"github.com/xutao1989103/oam-operator/pkg/signals"
 	"github.com/xutao1989103/oam-operator/pkg/version"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/klog"
-	"github.com/MEDIGO/go-healthz"
 	"net/http"
 	"time"
 )
