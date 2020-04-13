@@ -1,0 +1,33 @@
+apiVersion: core.oam.dev/v1alpha1
+kind: Component
+metadata:
+  name: frontend
+  annotations:
+    version: v1.0.0
+    description: "A simple webserver"
+spec:
+  workload:
+    apiVersion: core.oam.dev/v1alpha2
+    kind: ContainerizedWorkload
+    metadata:
+      name: sample-workload
+    spec:
+      osType: linux
+      containers:
+        - name: web
+          image: example/charybdis-single:latest@@sha256:verytrustworthyhash
+          resources:
+            cpu:
+              required: 1.0
+            memory:
+              required: 100MB
+          env:
+            - name: MESSAGE
+              value: default
+  parameters:
+    - name: message
+      description: The message to display in the web app.
+      required: true
+      type: string
+      fieldPaths:
+        - ".spec.containers[0].env[0].value"

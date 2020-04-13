@@ -1,0 +1,7 @@
+namespace: oam
+
+bases:
+  - base
+
+resources:
+  - deployment.yaml

@@ -1,0 +1,15 @@
+apiVersion: core.oam.dev/v1alpha1
+kind: ApplicationConfiguration
+metadata:
+  name: custom-single-app
+  annotations:
+    version: v1.0.0
+    description: "Customized version of single-app"
+spec:
+  components:
+    - componentName: frontend
+      parameterValues:
+        - name: message
+          value: "Well hello there"
+
+    - componentName: backend

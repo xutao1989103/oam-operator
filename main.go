@@ -1,12 +1,17 @@
 package main
 
 import (
+	"errors"
 	"flag"
+	"github.com/MEDIGO/go-healthz"
 	"github.com/xutao1989103/oam-operator/pkg/controller"
 	"github.com/xutao1989103/oam-operator/pkg/signals"
+	"github.com/xutao1989103/oam-operator/pkg/version"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/klog"
+	"net/http"
+	"time"
 )
 
 var (
@@ -36,8 +41,21 @@ func main() {
 		klog.Fatalf("Error running controller: %s", err.Error())
 	}
 
+	go startHealthCheckServer()
+
 	<-stopCh
 	klog.Info("Shutting down workers")
+}
+
+func startHealthCheckServer()  {
+	healthz.Set("version", version.VERSION)
+
+	healthz.Register("important_check", time.Second*5, func() error {
+		return errors.New("fail fail fail")
+	})
+
+	http.Handle("/healthz", healthz.Handler())
+	http.ListenAndServe(":8000", nil)
 }
 
 func init() {

@@ -1,0 +1,7 @@
+namespace: oam
+commonLabels:
+  app: oam-go
+resources:
+  - account.yaml
+  - crd.yaml
+  - rbac.yaml

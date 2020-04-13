@@ -3,11 +3,10 @@ module github.com/xutao1989103/oam-operator
 go 1.13
 
 require (
-	github.com/golang/protobuf v1.3.2
+	github.com/MEDIGO/go-healthz v0.0.0-20160923151312-9b0725fef657
 	github.com/imdario/mergo v0.3.9 // indirect
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
-	google.golang.org/grpc v1.27.0
 	k8s.io/api v0.18.0
 	k8s.io/apimachinery v0.18.0
 	k8s.io/client-go v11.0.0+incompatible

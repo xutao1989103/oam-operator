@@ -1,0 +1,25 @@
+apiVersion: core.oam.dev/v1alpha1
+kind: Component
+metadata:
+  name: backend
+  annotations:
+    version: v1.0.0
+    description: "Cassandra database"
+spec:
+  workload:
+    apiVersion: data.oam.dev/v1
+    kind: Cassandra
+    spec:
+      maxStalenessPrefix: 100000
+      defaultConsistencyLevel: Eventual
+  parameters:
+    - name: maxStalenessPrefix
+      description: Max stale requests.
+      type: int
+      fieldPaths:
+        - ".spec.maxStalenessPrefix"
+    - name: defaultConsistencyLevel
+      description: The default consistency level
+      type: string
+      fieldPaths:
+        - ".spec.defaultConsistencyLevel"
